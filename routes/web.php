@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth','admin'])->group(function () {
     Route::get('/admin', function(){
-        return "Admin Page";
+        return view('admin.index');
     });
 
 });
