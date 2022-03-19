@@ -26,5 +26,7 @@ Route::middleware(['auth','admin'])->group(function () {
         return view('admin.index');
     });
 
+    Route::resource('/admin/category', App\Http\Controllers\Admin\CategoryController::class);
+
 });
 //
