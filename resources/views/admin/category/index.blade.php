@@ -2,12 +2,11 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Category</h1>
-
         <div class="btn-toolbar mb-2 mb-md-0">
             <form action="{{ route('category.index') }}" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="keyword" placeholder="Search"
-                        value="{{ request()->keyword }}">
+                    <input type="text" class="form-control" name="s" placeholder="Search"
+                        value="{{ request()->s }}">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">
                             <span data-feather="search"></span>
@@ -42,6 +41,8 @@
 
 
 
+
+
     <table class="table table-hover">
         <tr>
             <th>ID</th>
@@ -61,19 +62,17 @@
                 <td>{{ $category->slug }}</td>
                 <td>{{ $category->description }}</td>
                 <td>
-                    @if ($category->status === "on")
-                    <span class="badge rounded-pill bg-success">active</span>
+                    @if ($category->status === 'on')
+                        <span class="badge rounded-pill bg-success">active</span>
                     @else
-                    <span class="badge rounded-pill bg-danger">Inactive</span>
-
+                        <span class="badge rounded-pill bg-danger">Inactive</span>
                     @endif
                 </td>
                 <td>
-                     <form action=" {{ route('category.update', $category->id) }} " enctype="multipart/form-data"
-                            method="post">
-                            @csrf
-                            @method('PUT')
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#editCategory"
+
+
+
+                    <a href="{{ route('category.edit', $category->id) }}" type="button"
                         class="btn btn-sm btn-outline-success">
                         Edit
                         <span data-feather="edit-3"></span>
@@ -87,6 +86,8 @@
                     </form>
 
                 </td>
+
+
                 </div>
 
                 </div>
@@ -141,83 +142,12 @@
 
                     </form>
 
+
                 </div>
 
             </div>
         </div>
+
     </div>
-
-
-
-
-    @if ($total_categories > 0)
-        {{-- check is required as it throws an error if there are no categories & while editing we need $category variable --}}
-
-        <div class="modal fade py-5" id="editCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content rounded-5 shadow">
-                    <div class="modal-header p-5 pb-4 border-bottom-0">
-                        <h2 class="fw-bold mb-0">Edit category</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                       {{-- {{ url('admin/category/' . $category->id) }} --}}
-                        <form action=" {{ route('category.update', $category->id) }} " enctype="multipart/form-data"
-                            method="post">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-3">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name"
-                                    value={{ $category->name }}>
-                                @error('name')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3">{{ $category->description }}</textarea>
-                                @error('description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" {{$category->status == "on" ? 'checked' : ""}} name="status" role="switch" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Status</label>
-                                  </div>
-                            </div>
-
-
-
-                            <div class="mb-3">
-                                <label for="image">Image</label>
-                                <input type="file" class="form-control" id="image" name="image">
-                                @if ($category->image)
-                                    <br>
-                                    <img src="{{ asset('images/' . $category->image) }}" alt="{{ $category->name }}"
-                                        class="rounded mx-auto d-block" width="100px" height="100px">
-                                @endif
-                                @error('image')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    @else
-        <h3>Please add some categories</h3>
-    @endif
+    {{ $categories->onEachSide(1)->links() }}
 @endsection

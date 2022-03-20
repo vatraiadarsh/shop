@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use Illuminate\Pagination\Paginator;
+
 
 class CategoryController extends Controller
 {
@@ -16,8 +18,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $search = request()->query('s');
+
+        if ($search) {
+            $categories = Category::where('name', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->paginate(2);
+        }else{
+           $categories = Category::paginate(3);
+        }
+
         return view('admin.category.index', [
-            'categories' => Category::all(),
+            'categories' => $categories,
             'total_categories' => Category::count(),
         ]);
     }
@@ -81,7 +93,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-       
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit', compact('category'));
     }
 
 
