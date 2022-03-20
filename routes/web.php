@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,11 +23,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/admin', function(){
-        return view('admin.dashboard');
-    });
+    Route::get('/admin', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
 
     Route::resource('/admin/category', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('/admin/product', App\Http\Controllers\Admin\ProductController::class);
 
 });
 //

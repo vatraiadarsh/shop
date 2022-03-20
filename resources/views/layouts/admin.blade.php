@@ -61,7 +61,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link {{ Request::path() === "admin/product" ? 'active' : '' }}" href="/admin/product">
                                 <span data-feather="shopping-cart"></span> Products
                             </a>
                         </li>

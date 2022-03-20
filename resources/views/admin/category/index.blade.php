@@ -57,7 +57,7 @@
             <tr>
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->name }}</td>
-                <td><img src="{{ asset('images/' . $category->image) }}" alt="{{ $category->name }}" width="70px"
+                <td><img src="{{ asset('images/category/' . $category->image) }}" alt="{{ $category->name }}" width="70px"
                         height="70px"></td>
                 <td>{{ $category->slug }}</td>
                 <td>{{ $category->description }}</td>

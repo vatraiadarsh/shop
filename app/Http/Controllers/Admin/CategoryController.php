@@ -62,7 +62,7 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $name = time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
+            $destinationPath = public_path('/images/category');
             $image->move($destinationPath, $name);
         } else {
             $name = 'not-found.jpg';
@@ -117,7 +117,7 @@ class CategoryController extends Controller
               $category->status = 'off';
          }
         if ($request->hasFile('image')) {
-            $destinationPath = public_path('/images\/');
+            $destinationPath = public_path('/images/category/');
             if (File::exists($destinationPath . $category->image)) {
                 File::delete($destinationPath . $category->image);
             }
