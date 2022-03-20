@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth','admin'])->group(function () {
     Route::get('/admin', function(){
-        return view('admin.index');
+        return view('admin.dashboard');
     });
 
     Route::resource('/admin/category', App\Http\Controllers\Admin\CategoryController::class);
