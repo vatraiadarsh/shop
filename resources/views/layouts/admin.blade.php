@@ -48,6 +48,7 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
+
                             <a class="nav-link {{ Request::path() === 'admin' ? 'active' : '' }}" aria-current="page"
                                 href="/admin">
                                 <span data-feather="home"></span> Dashboard
@@ -105,9 +106,12 @@
                                 <span data-feather="file-text"></span> Social engagement
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="file-text"></span> Year-end sale
+                        <li class="nav-item ">
+                            <?php $auth_user = Auth::user()->id; ?>
+                            <a class="nav-link {{ Request::path() === "admin/profile/". $auth_user ? 'active' : '' }}" href="/admin/profile/<?=$auth_user?>" >
+
+                                <span data-feather="user"></span> Profile
+
                             </a>
                         </li>
                     </ul>

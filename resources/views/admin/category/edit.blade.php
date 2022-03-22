@@ -43,7 +43,7 @@
                             <input type="file" class="form-control" id="image" name="image">
                             @if ($category->image)
                                 <br>
-                                <img src="{{ asset('images/' . $category->image) }}" alt="{{ $category->name }}"
+                                <img src="{{ asset('images/category/' . $category->image) }}" alt="{{ $category->name }}"
                                     class="rounded mx-auto d-block" width="100px" height="100px">
                             @endif
                             @error('image')

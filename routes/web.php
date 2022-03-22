@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,5 +28,11 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::resource('/admin/category', App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('/admin/product', App\Http\Controllers\Admin\ProductController::class);
 
+Route::get('/admin/profile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'index']);
+Route::put('/admin/profile/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'update']);
+
+
+
 });
-//
+
+
