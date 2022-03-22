@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Illuminate\Pagination\Paginator;
 
@@ -35,6 +36,7 @@ class ProductController extends Controller
         return view('admin.product.index', [
             'products' => $products,
             'total_products' => Product::count(),
+            'categories' => Category::all(),
         ]);
 
     }
@@ -87,7 +89,21 @@ class ProductController extends Controller
         $product->quantity = $request->input('quantity');
         $product->image = $name;
 
+
         $product->save();
+
+
+        // sync() accepts an array of IDs to place on the pivot table
+
+        // convert an string to array
+        // $p = explode(',', $request->input('categories'));
+
+        // $product->categories()->sync($request->input('categories'));
+        $product->categories()->sync($request->input('categories'));
+
+
+
+
 
         return redirect('/admin/product')->with(
             'success',
@@ -116,7 +132,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.product.edit', compact('product'));
+        $categories = Category::all();
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -154,6 +171,10 @@ class ProductController extends Controller
 
         }
         $product->update();
+
+
+        $product->categories()->sync($request->input('categories'));
+
         return redirect('/admin/product')->with(
             'success',
             'Product updated successfully'

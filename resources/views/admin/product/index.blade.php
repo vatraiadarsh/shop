@@ -39,15 +39,20 @@
         </div>
     @endif
 
+
+
+
     <table class="table table-hover">
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Image</th>
             <th>Title</th>
+            <th>categories</th>
             <th>Description</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Image</th>
+
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -58,6 +63,11 @@
                 <td><img src="{{ asset('images/product/' . $product->image) }}" alt="{{ $product->name }}" width="70px"
                         height="70px"></td>
                 <td>{{ $product->title }}</td>
+                <td>
+                    @foreach ($product->categories as $category)
+                        <span class="badge rounded-pill bg-secondary" >{{ $category->name }}</span>
+                    @endforeach
+                </td>
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->quantity }}</td>
@@ -70,19 +80,22 @@
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-outline-secondary">Edit
                         <span data-feather="edit"></span>
                     </a>
                     <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
                         @csrf
                         @method('delete')
-                        <button type="submit" class="btn btn-sm btn-danger">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete
                             <span data-feather="trash"></span>
                         </button>
                     </form>
                 </td>
             </tr>
         @endforeach
+
+
+
     </table>
     <div class="modal fade py-5" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -104,6 +117,17 @@
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category">Category</label>
+                        <select class="form-select form-select-sm" multiple size="3" id="category" name="categories[]">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="form-text">use ctrl+click to select multiple categories</div>
+
                     </div>
 
                     <div class="mb-3">
@@ -149,7 +173,7 @@
                         @enderror
                     </div>
 
-                    
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -167,4 +191,6 @@
 
 </div>
 {{ $products->onEachSide(1)->links() }}
+
+
 @endsection

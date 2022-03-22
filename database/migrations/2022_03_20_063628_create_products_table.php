@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('image');
             $table->string('status')->default("off");
+            // $table->unsignedBigInteger('category_id');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

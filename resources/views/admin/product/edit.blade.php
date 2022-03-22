@@ -1,7 +1,7 @@
 @extends("layouts.admin")
 @section('content')
     <div class="modal modal-signin position-static d-block bg-light py-5" tabindex="-1" role="dialog" id="editProduct">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content rounded-5 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
                     <h2 class="fw-bold mb-0">Edit product</h2>
@@ -18,6 +18,18 @@
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category">Category</label>
+                            <select class="form-select form-select-sm" multiple size="3" id="category" name="categories[]">
+                                @foreach ($categories as $category)
+                                    <option {{ $product->categories->contains($category->id) ? 'selected' : '' }}
+                                        value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            <div class="form-text">use ctrl+click to select multiple categories</div>
+
                         </div>
 
                         <div class="mb-3">
